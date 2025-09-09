@@ -7,6 +7,7 @@ from .models import Expense
 from .ai_utils import categorize_expense, detect_anomalies
 from datetime import date, timedelta
 import random
+from decimal import Decimal
 
 
 # ----------------------------
@@ -122,7 +123,7 @@ class ExpenseAPITest(APITestCase):
         for i in range(10):
             Expense.objects.create(
                 user=self.user,
-                amount=random.uniform(10, 100),
+                amount=Decimal(str(round(random.uniform(10, 100), 2))),
                 description=f'Test {i}',
                 category='Food' if i % 2 == 0 else 'Transport',
                 date=today - timedelta(days=i)

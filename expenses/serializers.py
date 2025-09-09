@@ -7,6 +7,11 @@ class ExpenseSerializer(serializers.ModelSerializer):
         model = Expense
         fields = ['id', 'amount', 'description', 'category', 'date']
 
+    def validate_amount(self, value):
+        if value < 0:
+            raise serializers.ValidationError("Amount cannot be negative")
+        return value
+
 class InsightSerializer(serializers.Serializer):
     monthly_summary = serializers.DictField()
     weekly_summary = serializers.DictField()
